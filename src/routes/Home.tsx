@@ -1,5 +1,6 @@
-import { gql, useQuery, DocumentNode, ApolloError } from '@apollo/client';
+import { gql, useQuery, DocumentNode } from '@apollo/client';
 import styled from 'styled-components';
+import Movie from '../components/Movie';
 
 const GET_MOVIES: DocumentNode = gql`
   {
@@ -20,12 +21,11 @@ interface dataType {
 
 interface queryLoding {
   loading: boolean;
-  error?: ApolloError | undefined;
   data: dataType | undefined;
 }
 
 const Home = () => {
-  const { loading }: queryLoding = useQuery(GET_MOVIES);
+  const { loading, data }: queryLoding = useQuery(GET_MOVIES);
 
   return (
     <Container>
@@ -34,6 +34,9 @@ const Home = () => {
         <Subtitle>GraphQL</Subtitle>
       </Header>
       {loading && <Loading>Loading...</Loading>}
+      {!loading &&
+        data?.movies &&
+        data.movies.map((movie) => <Movie key={movie.id} movieID={movie.id} />)}
     </Container>
   );
 };
