@@ -23,20 +23,20 @@ interface queryLoding {
   error?: ApolloError | undefined;
   data: dataType | undefined;
 }
+
 const Home = () => {
   const { loading }: queryLoding = useQuery(GET_MOVIES);
 
   return (
     <Container>
       <Header>
-        <Title>Apollo 2020</Title>
-        <Subtitle>I love GraphQL</Subtitle>
+        <Title>Apollo Movie</Title>
+        <Subtitle>GraphQL</Subtitle>
       </Header>
       {loading && <Loading>Loading...</Loading>}
     </Container>
   );
 };
-
 export default Home;
 
 const Container = styled.div`
