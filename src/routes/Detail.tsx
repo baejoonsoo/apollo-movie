@@ -66,6 +66,7 @@ const Container = styled.div`
   justify-content: space-around;
   align-items: center;
   color: white;
+  overflow: hidden;
 `;
 
 const Column = styled.div`
