@@ -1,6 +1,6 @@
 import { gql, useQuery } from '@apollo/client';
-import { type } from 'os';
-import { useParams } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 const GET_MOVIE = gql`
@@ -13,6 +13,12 @@ const GET_MOVIE = gql`
       rating
       language
       isLiked @client
+    }
+
+    suggestions(id: $id) {
+      id
+      title
+      medium_cover_image
     }
   }
 `;
@@ -28,19 +34,35 @@ interface dataType {
   isLiked: boolean;
 }
 
+interface suggestionsDataType {
+  id: number;
+  __typename?: string;
+  title: string;
+  medium_cover_image: string;
+}
+
 interface queryLoding {
   loading: boolean;
-  data: { movie: dataType } | undefined;
+  data: { movie: dataType; suggestions: suggestionsDataType[] } | undefined;
 }
 
 const Detail = () => {
   const { id } = useParams();
+  const [hover, setHover] = useState<boolean>(false);
 
   const { loading, data }: queryLoding = useQuery(GET_MOVIE, {
     variables: { id: Number(id) },
   });
 
   console.log(data);
+
+  const onMouseEnter = () => {
+    setHover(true);
+  };
+
+  const onMouseLeave = () => {
+    setHover(false);
+  };
 
   return (
     <Container>
@@ -56,11 +78,61 @@ const Detail = () => {
         <Description>{data?.movie.description_intro}</Description>
       </Column>
       <Poster background={data?.movie.medium_cover_image}></Poster>
+      <BottonBar onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} />
+      <Suggestions
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        top={hover ? '10px' : '-170px'}
+      >
+        {data?.suggestions.map((movie: suggestionsDataType) => (
+          <div key={movie.id}>
+            <Link to={`/${movie.id}`}>
+              <SuggestionsMovie
+                alt="Suggestions movie"
+                title={movie.title}
+                src={movie.medium_cover_image}
+              />
+            </Link>
+          </div>
+        ))}
+      </Suggestions>
     </Container>
   );
 };
 
 export default Detail;
+
+const SuggestionsMovie = styled.img`
+  width: 110px;
+
+  transition: 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05) translateY(-5px);
+  }
+`;
+
+const Suggestions = styled.div`
+  position: fixed;
+  align-items: flex-end;
+  transition: 0.3s ease-in-out;
+
+  bottom: ${({ top }: { top: string }): string => top};
+  left: 90px;
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  gap: 30px;
+`;
+
+const BottonBar = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background-color: red;
+`;
 
 const Container = styled.div`
   height: 100vh;
