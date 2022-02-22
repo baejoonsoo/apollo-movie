@@ -34,9 +34,17 @@ const Home = () => {
         <Subtitle>GraphQL</Subtitle>
       </Header>
       {loading && <Loading>Loading...</Loading>}
-      {!loading &&
-        data?.movies &&
-        data.movies.map((movie) => <Movie key={movie.id} movieID={movie.id} />)}
+      {!loading && data?.movies && (
+        <Movies>
+          {data.movies.map((movie) => (
+            <Movie
+              key={movie.id}
+              movieID={movie.id}
+              background={movie.medium_cover_image}
+            />
+          ))}
+        </Movies>
+      )}
     </Container>
   );
 };
@@ -75,4 +83,13 @@ const Loading = styled.div`
   opacity: 0.5;
   font-weight: 500;
   margin-top: 10px;
+`;
+
+const Movies = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 25px;
+  width: 60%;
+  position: relative;
+  top: -50px;
 `;
