@@ -7,6 +7,7 @@ const GET_MOVIES: DocumentNode = gql`
     movies {
       id
       medium_cover_image
+      isLiked @client
     }
   }
 `;
@@ -16,6 +17,7 @@ interface dataType {
     __typename: string;
     id: number;
     medium_cover_image: string;
+    isLiked: boolean;
   }[];
 }
 
@@ -40,6 +42,7 @@ const Home = () => {
             key={movie.id}
             movieID={movie.id}
             background={movie.medium_cover_image}
+            isLiked={movie.isLiked}
           />
         ))}
       </Movies>
