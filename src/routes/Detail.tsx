@@ -6,22 +6,26 @@ import styled from 'styled-components';
 const GET_MOVIE = gql`
   query getMovie($id: Int!) {
     movie(id: $id) {
+      id
       title
       medium_cover_image
       description_intro
       rating
       language
+      isLiked @client
     }
   }
 `;
 
 interface dataType {
-  __typename?: string | undefined;
-  title: String | undefined;
-  medium_cover_image: string | undefined;
-  rating: Number | undefined;
-  description_intro: String | undefined;
-  language: string | undefined;
+  __typename?: string;
+  id: number;
+  title: String;
+  medium_cover_image: string;
+  rating: Number;
+  description_intro: String;
+  language: string;
+  isLiked: boolean;
 }
 
 interface queryLoding {
@@ -41,7 +45,11 @@ const Detail = () => {
   return (
     <Container>
       <Column>
-        <Title>{loading ? 'Loading...' : data?.movie.title}</Title>
+        <Title>
+          {loading ? 'Loading...' : data?.movie.title}
+          {data?.movie.isLiked && ' ❤️'}
+        </Title>
+
         <Subtitle>
           {data && `${data.movie.language} • ${data.movie.rating}`}
         </Subtitle>
