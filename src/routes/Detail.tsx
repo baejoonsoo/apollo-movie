@@ -41,17 +41,13 @@ const Detail = () => {
   return (
     <Container>
       <Column>
-        <Title>{!data ? 'Loading...' : data.movie.title}</Title>
-        {!loading && data && (
-          <>
-            <Subtitle>
-              {data.movie.language} • {data.movie.rating}
-            </Subtitle>
-            <Description>{data.movie.description_intro}</Description>
-          </>
-        )}
+        <Title>{loading ? 'Loading...' : data?.movie.title}</Title>
+        <Subtitle>
+          {data && `${data.movie.language} • ${data.movie.rating}`}
+        </Subtitle>
+        <Description>{data?.movie.description_intro}</Description>
       </Column>
-      <Poster background={data?.movie.medium_cover_image || ''}></Poster>
+      <Poster background={data?.movie.medium_cover_image}></Poster>
     </Container>
   );
 };
@@ -73,7 +69,11 @@ const Column = styled.div`
   width: 50%;
 `;
 
-const setPosterImg = ({ background }: { background: string }): string => {
+const setPosterImg = ({
+  background,
+}: {
+  background: string | undefined;
+}): string | undefined => {
   return background;
 };
 
