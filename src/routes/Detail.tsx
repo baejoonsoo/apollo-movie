@@ -43,12 +43,11 @@ const Detail = () => {
       <Column>
         <Title>{data?.movie.title}</Title>
         <Subtitle>
-          {data?.movie.language} • {data?.movie.rating}
+          {!loading && `${data?.movie.language} • ${data?.movie.rating}`}
         </Subtitle>
-        <Description>{data?.movie.description_intro}</Description>
+        {/* <Description>{data?.movie.description_intro}</Description> */}
       </Column>
-      {loading && <Poster></Poster>}
-      {/* {!loading && data?.movie && <h1>{data.movie.title}</h1>} */}
+      <Poster></Poster>
     </Container>
   );
 };
@@ -60,21 +59,31 @@ const Container = styled.div`
   background-image: linear-gradient(-45deg, #d754ab, #fd723a);
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   color: white;
 `;
 
-const Column = styled.div``;
-
-const Poster = styled.div``;
+const Column = styled.div`
+  /* margin-right: auto; */
+`;
+const Poster = styled.div`
+  width: 25%;
+  height: 0px;
+  padding-bottom: 37%;
+  background-color: transparent;
+`;
 
 const Title = styled.h1`
-  font-size: 60px;
+  font-size: 65px;
+  margin-bottom: 15px;
 `;
 
 const Subtitle = styled.h4`
-  font-size: 45px;
+  font-size: 35px;
+  margin-bottom: 10px;
 `;
 
-const Description = styled.p``;
+const Description = styled.p`
+  font-size: 28px;
+`;
