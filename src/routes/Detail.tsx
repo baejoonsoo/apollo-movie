@@ -128,10 +128,10 @@ const Suggestions = styled.div`
 const BottonBar = styled.div`
   position: fixed;
   bottom: 0;
-  left: 0;
-  width: 100%;
+  left: 30px;
+  width: 45%;
   height: 50px;
-  background-color: red;
+  /* background-color: red; */
 `;
 
 const Container = styled.div`
