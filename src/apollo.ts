@@ -13,7 +13,12 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
     },
     Mutation: {
       likeMovie: (_, { id }, { cache }) => {
-        console.log(id);
+        cache.modify({
+          id: `Movie:${id}`,
+          fields: {
+            isLiked: (isLiked: boolean): boolean => !isLiked, // 현재 isLiked 값을 받아서 true-false 토글
+          },
+        });
       },
     },
   },

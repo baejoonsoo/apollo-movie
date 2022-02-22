@@ -31,9 +31,7 @@ const Movie = ({ movieID, background, isLiked }: movieId) => {
   });
 
   const onClick = (): void => {
-    if (!isLiked) {
-      likeMovie();
-    }
+    likeMovie();
   };
 
   return (
