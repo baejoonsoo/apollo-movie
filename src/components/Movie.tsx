@@ -1,19 +1,47 @@
+import {
+  ApolloCache,
+  DefaultContext,
+  gql,
+  MutationTuple,
+  useMutation,
+} from '@apollo/client';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
+const LIKE_MOVIE = gql`
+  mutation likeMovie($id: Int!) {
+    likeMovie(id: $id) @client
+  }
+`;
 
 interface movieId {
   movieID: number;
   background: string;
   isLiked: boolean;
 }
-
+type likeMovieClick = MutationTuple<
+  any,
+  { id: number },
+  DefaultContext,
+  ApolloCache<any>
+>;
 const Movie = ({ movieID, background, isLiked }: movieId) => {
+  const [likeMovie]: likeMovieClick = useMutation(LIKE_MOVIE, {
+    variables: { id: movieID },
+  });
+
+  const onClick = (): void => {
+    if (!isLiked) {
+      likeMovie();
+    }
+  };
+
   return (
     <Container>
       <Link to={`/${movieID}`}>
         <Poster bg={background} />
       </Link>
-      <button>{isLiked ? 'Unlike' : 'Like'}</button>
+      <button onClick={onClick}>{isLiked ? 'Unlike' : 'Like'}</button>
     </Container>
   );
 };

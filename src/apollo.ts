@@ -11,6 +11,11 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
     Movie: {
       isLiked: () => false,
     },
+    Mutation: {
+      likeMovie: (_, { id }, { cache }) => {
+        console.log(id);
+      },
+    },
   },
 });
 
