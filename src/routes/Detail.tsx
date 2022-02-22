@@ -4,10 +4,10 @@ import { useParams } from 'react-router-dom';
 const GET_MOVIE = gql`
   query getMovie($id: Int!) {
     movie(id: $id) {
-      id
       title
       medium_cover_image
       description_intro
+      rating
     }
   }
 `;
@@ -15,9 +15,9 @@ const GET_MOVIE = gql`
 interface dataType {
   movie: {
     __typename: string;
-    id: number;
     title: String;
     medium_cover_image: string;
+    rating: Number;
     description_intro: String;
   };
 }
