@@ -2,6 +2,7 @@ import { gql, useQuery } from '@apollo/client';
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import returnBtn from '../img/returnBtn.png';
 
 const GET_MOVIE = gql`
   query getMovie($id: Int!) {
@@ -66,6 +67,9 @@ const Detail = () => {
 
   return (
     <Container>
+      <Link to="/">
+        <ReturnBtn src={returnBtn} />
+      </Link>
       <Column>
         <Title>
           {loading ? 'Loading...' : data?.movie.title}
@@ -102,6 +106,14 @@ const Detail = () => {
 
 export default Detail;
 
+const ReturnBtn = styled.img`
+  position: fixed;
+  top: 10px;
+  left: 15px;
+  width: 20px;
+  height: 20px;
+`;
+
 const SuggestionsMovie = styled.img`
   width: 110px;
 
@@ -131,7 +143,6 @@ const BottonBar = styled.div`
   left: 30px;
   width: 45%;
   height: 50px;
-  /* background-color: red; */
 `;
 
 const Container = styled.div`
