@@ -9,8 +9,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const LIKE_MOVIE = gql`
-  mutation likeMovie($id: Int!) {
-    likeMovie(id: $id) @client
+  mutation toggleLikeMovie($id: Int!) {
+    toggleLikeMovie(id: $id) @client
   }
 `;
 
@@ -26,12 +26,12 @@ type likeMovieClick = MutationTuple<
   ApolloCache<any>
 >;
 const Movie = ({ movieID, background, isLiked }: movieId) => {
-  const [likeMovie]: likeMovieClick = useMutation(LIKE_MOVIE, {
+  const [toggleMovie]: likeMovieClick = useMutation(LIKE_MOVIE, {
     variables: { id: movieID },
   });
 
   const onClick = (): void => {
-    likeMovie();
+    toggleMovie();
   };
 
   return (
